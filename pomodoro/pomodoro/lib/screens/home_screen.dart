@@ -48,6 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void resetPressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+      totalSeconds = twentyFiveMinutes;
+    });
+  }
+
   String format(int seconds) {
     var duration = Duration(seconds: seconds);
     String text = duration.toString().substring(2, 7);
@@ -77,15 +85,30 @@ class _HomeScreenState extends State<HomeScreen> {
             Flexible(
               flex: 3,
               child: Center(
-                  child: IconButton(
-                onPressed: isRunning ? onPausePressed : onStartPressed,
-                icon: Icon(
-                  isRunning
-                      ? Icons.pause_circle_outline
-                      : Icons.play_circle_outline,
-                ),
-                iconSize: 120,
-                color: Theme.of(context).cardColor,
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: isRunning ? onPausePressed : onStartPressed,
+                    icon: Icon(
+                      isRunning
+                          ? Icons.pause_circle_outline
+                          : Icons.play_circle_outline,
+                    ),
+                    iconSize: 120,
+                    color: Theme.of(context).cardColor,
+                  ),
+                  TextButton(
+                    onPressed: resetPressed,
+                    child: Text(
+                      'reset',
+                      style: TextStyle(
+                        color: Theme.of(context).cardColor,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+                ],
               )),
             ),
             Flexible(
